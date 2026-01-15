@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>寶寶學單字 | 幼兒Sight Words學習網站</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f9ff;
+            background-image: radial-gradient(#b8e1ff 2px, transparent 2px);
+            background-size: 30px 30px;
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: #ff6b9d;
+        }
+        
+        h1 {
+            color: #3a86ff;
+            font-size: 2.8rem;
+            text-shadow: 3px 3px 0 #ffd166;
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            color: #06d6a0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .lucas-intro {
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 25px auto;
+            max-width: 800px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            border: 5px solid #3a86ff;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .lucas-avatar {
+            width: 100px;
+            height: 100px;
+            background-color: #b8e1ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #ff6b9d;
+        }
+        
+        .lucas-avatar i {
+            font-size: 3.5rem;
+            color: #3a86ff;
+        }
+        
+        .lucas-text {
+            flex: 1;
+        }
+        
+        .lucas-text h3 {
+            color: #ff6b9d;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .lucas-text p {
+            font-size: 1.2rem;
+            color: #555;
+            line-height: 1.5;
+        }
+        
+        .instructions {
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 25px auto;
+            max-width: 800px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            border: 5px dashed #ffd166;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #555;
+        }
+        
+        .instructions i {
+            color: #3a86ff;
+            margin-right: 8px;
+        }
+        
+        .words-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .word-card {
+            background-color: white;
+            border-radius: 25px;
+            width: 300px;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 6px solid;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .word-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .word-card:nth-child(1) { border-color: #ff6b9d; }
+        .word-card:nth-child(2) { border-color: #3a86ff; }
+        .word-card:nth-child(3) { border-color: #06d6a0; }
+        .word-card:nth-child(4) { border-color: #ffd166; }
+        .word-card:nth-child(5) { border-color: #9d4edd; }
+        
+        .word-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 15px;
+            background-color: inherit;
+            border-color: inherit;
+        }
+        
+        .word-card:nth-child(1)::before { background-color: #ff6b9d; }
+        .word-card:nth-child(2)::before { background-color: #3a86ff; }
+        .word-card:nth-child(3)::before { background-color: #06d6a0; }
+        .word-card:nth-child(4)::before { background-color: #ffd166; }
+        .word-card:nth-child(5)::before { background-color: #9d4edd; }
+        
+        .word-header {
+            margin-bottom: 20px;
+        }
+        
+        .word {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        .pronounce-btn {
+            background-color: #3a86ff;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+        
+        .pronounce-btn:hover {
+            background-color: #2667cc;
+            transform: scale(1.05);
+        }
+        
+        .example-btn {
+            background-color: #06d6a0;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .example-btn:hover {
+            background-color: #05b586;
+            transform: scale(1.05);
+        }
+        
+        .example {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+            border-left: 5px solid;
+            font-size: 1.3rem;
+            line-height: 1.5;
+        }
+        
+        .word-card:nth-child(1) .example { border-left-color: #ff6b9d; }
+        .word-card:nth-child(2) .example { border-left-color: #3a86ff; }
+        .word-card:nth-child(3) .example { border-left-color: #06d6a0; }
+        .word-card:nth-child(4) .example { border-left-color: #ffd166; }
+        .word-card:nth-child(5) .example { border-left-color: #9d4edd; }
+        
+        .highlight {
+            font-weight: bold;
+            padding: 2px 5px;
+            border-radius: 5px;
+        }
+        
+        .word-card:nth-child(1) .highlight { background-color: #ff6b9d33; color: #b30047; }
+        .word-card:nth-child(2) .highlight { background-color: #3a86ff33; color: #0044cc; }
+        .word-card:nth-child(3) .highlight { background-color: #06d6a033; color: #017a52; }
+        .word-card:nth-child(4) .highlight { background-color: #ffd16633; color: #b37400; }
+        .word-card:nth-child(5) .highlight { background-color: #9d4edd33; color: #5a189a; }
+        
+        .lucas-example {
+            background-color: #e6f7ff;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 2px dashed #3a86ff;
+            font-size: 1.2rem;
+            position: relative;
+        }
+        
+        .lucas-example::before {
+            content: "Lucas說：";
+            font-weight: bold;
+            color: #ff6b9d;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .image-container {
+            width: 100%;
+            height: 150px;
+            background-color: #f0f7ff;
+            border-radius: 15px;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+        }
+        
+        .meaning {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            color: #555;
+            font-weight: bold;
+        }
+        
+        .practice-section {
+            background-color: white;
+            border-radius: 25px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border: 5px solid #3a86ff;
+        }
+        
+        .practice-title {
+            text-align: center;
+            color: #3a86ff;
+            font-size: 2rem;
+            margin-bottom: 25px;
+        }
+        
+        .practice-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .sentence-card {
+            background-color: #f8f9fa;
+            border-radius: 20px;
+            padding: 20px;
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+            text-align: center;
+            font-size: 1.4rem;
+            border: 4px solid #ffd166;
+        }
+        
+        .fill-blank {
+            background-color: #e9f7ff;
+            border-radius: 20px;
+            padding: 25px;
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+            text-align: center;
+            border: 4px solid #06d6a0;
+        }
+        
+        .blank-word {
+            display: inline-block;
+            width: 100px;
+            height: 50px;
+            background-color: white;
+            border: 3px dashed #3a86ff;
+            border-radius: 10px;
+            margin: 0 10px;
+            vertical-align: middle;
+        }
+        
+        .word-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .word-option {
+            background-color: #ffd166;
+            color: #333;
+            border: none;
+            border-radius: 15px;
+            padding: 12px 20px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .word-option:hover {
+            background-color: #ffc233;
+            transform: scale(1.05);
+        }
+        
+        .lucas-story {
+            background-color: white;
+            border-radius: 25px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            border: 5px solid #ff6b9d;
+        }
+        
+        .story-title {
+            text-align: center;
+            color: #ff6b9d;
+            font-size: 2rem;
+            margin-bottom: 25px;
+        }
+        
+        .story-content {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: #f9f7ff;
+            border-radius: 15px;
+        }
+        
+        .story-word {
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 5px;
+            background-color: #ffd166;
+        }
+        
+        .story-audio {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .story-btn {
+            background-color: #9d4edd;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+        
+        .story-btn:hover {
+            background-color: #7b2cbf;
+            transform: scale(1.05);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .animal-icon {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .words-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .word-card {
+                width: 90%;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .lucas-intro {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-child"></i>
+                <h1>寶寶學單字</h1>
+                <i class="fas fa-book"></i>
+            </div>
+            <div class="subtitle">適合4歲小朋友的Sight Words學習樂園</div>
+        </header>
+        
+        <div class="lucas-intro">
+            <div class="lucas-avatar">
+                <i class="fas fa-child"></i>
+            </div>
+            <div class="lucas-text">
+                <h3>嗨！我是Lucas！</h3>
+                <p>我今年4歲，喜歡學習新單字！今天我要和大家一起學習五個重要的Sight Words。每個單字都有我的生活例子，點擊按鈕可以聽到發音喔！</p>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <p><i class="fas fa-hand-point-right"></i>點擊每個單字旁邊的發音按鈕聽單字發音</p>
+            <p><i class="fas fa-volume-up"></i>點擊例句旁邊的按鈕聽完整句子發音</p>
+            <p><i class="fas fa-lightbulb"></i>看看Lucas如何使用這些單字，試著自己造句子！</p>
+        </div>
+        
+        <div class="words-container">
+            <!-- Word 1: only -->
+            <div class="word-card">
+                <div class="word-header">
+                    <div class="word">only</div>
+                    <div>
+                        <button class="pronounce-btn" data-word="only">
+                            <i class="fas fa-volume-up"></i> 單字發音
+                        </button>
+                        <button class="example-btn" data-sentence="I have only one cookie left.">
+                            <i class="fas fa-play-circle"></i> 例句發音
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="image-container">
+                    <i class="fas fa-cookie" style="color: #ff6b9d;"></i>
+                </div>
+                
+                <div class="meaning">意思: 只有、僅僅</div>
+                
+                <div class="example">
+                    <p>例句: I have <span class="highlight">only</span> one cookie left.</p>
+                    <p>(我<span class="highlight">只</span>剩下一塊餅乾了。)</p>
+                </div>
+                
+                <div class="lucas-example">
+                    <p>昨天媽媽給我餅乾，我<strong>only</strong>剩下兩塊，今天<strong>only</strong>剩下一塊了！</p>
+                    <button class="example-btn" data-sentence="Yesterday Mommy gave me cookies, I only had two left, today I only have one left!" style="margin-top: 5px; padding: 8px 15px; font-size: 0.9rem;">
+                        <i class="fas fa-play-circle"></i> Lucas例句發音
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Word 2: more -->
+            <div class="word-card">
+                <div class="word-header">
+                    <div class="word">more</div>
+                    <div>
+                        <button class="pronounce-btn" data-word="more">
+                            <i class="fas fa-volume-up"></i> 單字發音
+                        </button>
+                        <button class="example-btn" data-sentence="Can I have more milk, please?">
+                            <i class="fas fa-play-circle"></i> 例句發音
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="image-container">
+                    <i class="fas fa-glass-whiskey" style="color: #3a86ff;"></i>
+                </div>
+                
+                <div class="meaning">意思: 更多</div>
+                
+                <div class="example">
+                    <p>例句: Can I have <span class="highlight">more</span> milk, please?</p>
+                    <p>(請問我可以要<span class="highlight">更多</span>牛奶嗎？)</p>
+                </div>
+                
+                <div class="lucas-example">
+                    <p>早餐時我喝了牛奶，還想喝<strong>more</strong>！我也想要<strong>more</strong>草莓在麥片裡。</p>
+                    <button class="example-btn" data-sentence="At breakfast I drank milk, and I want more! I also want more strawberries in my cereal." style="margin-top: 5px; padding: 8px 15px; font-size: 0.9rem;">
+                        <i class="fas fa-play-circle"></i> Lucas例句發音
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Word 3: some -->
+            <div class="word-card">
+                <div class="word-header">
+                    <div class="word">some</div>
+                    <div>
+                        <button class="pronounce-btn" data-word="some">
+                            <i class="fas fa-volume-up"></i> 單字發音
+                        </button>
+                        <button class="example-btn" data-sentence="I have some colorful blocks.">
+                            <i class="fas fa-play-circle"></i> 例句發音
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="image-container">
+                    <i class="fas fa-shapes" style="color: #06d6a0;"></i>
+                </div>
+                
+                <div class="meaning">意思: 一些</div>
+                
+                <div class="example">
+                    <p>例句: I have <span class="highlight">some</span> colorful blocks.</p>
+                    <p>(我有<span class="highlight">一些</span>彩色積木。)</p>
+                </div>
+                
+                <div class="lucas-example">
+                    <p>我的玩具箱裡有<strong>some</strong>汽車，<strong>some</strong>恐龍，還有<strong>some</strong>積木！</p>
+                    <button class="example-btn" data-sentence="In my toy box, I have some cars, some dinosaurs, and some blocks!" style="margin-top: 5px; padding: 8px 15px; font-size: 0.9rem;">
+                        <i class="fas fa-play-circle"></i> Lucas例句發音
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Word 4: much -->
+            <div class="word-card">
+                <div class="word-header">
+                    <div class="word">much</div>
+                    <div>
+                        <button class="pronounce-btn" data-word="much">
+                            <i class="fas fa-volume-up"></i> 單字發音
+                        </button>
+                        <button class="example-btn" data-sentence="There is too much water in my cup.">
+                            <i class="fas fa-play-circle"></i> 例句發音
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="image-container">
+                    <i class="fas fa-tint" style="color: #ffd166;"></i>
+                </div>
+                
+                <div class="meaning">意思: 很多、大量</div>
+                
+                <div class="example">
+                    <p>例句: There is too <span class="highlight">much</span> water in my cup.</p>
+                    <p>(我的杯子裡有<span class="highlight">太多</span>水了。)</p>
+                </div>
+                
+                <div class="lucas-example">
+                    <p>昨天洗澡時，浴缸裡有<strong>too much</strong>泡泡！我今天不想吃<strong>too much</strong>蔬菜。</p>
+                    <button class="example-btn" data-sentence="Yesterday during bath time, there was too much bubble in the tub! I don't want to eat too much vegetables today." style="margin-top: 5px; padding: 8px 15px; font-size: 0.9rem;">
+                        <i class="fas fa-play-circle"></i> Lucas例句發音
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Word 5: before -->
+            <div class="word-card">
+                <div class="word-header">
+                    <div class="word">before</div>
+                    <div>
+                        <button class="pronounce-btn" data-word="before">
+                            <i class="fas fa-volume-up"></i> 單字發音
+                        </button>
+                        <button class="example-btn" data-sentence="Wash your hands before eating.">
+                            <i class="fas fa-play-circle"></i> 例句發音
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="image-container">
+                    <i class="fas fa-hands-wash" style="color: #9d4edd;"></i>
+                </div>
+                
+                <div class="meaning">意思: 在...之前</div>
+                
+                <div class="example">
+                    <p>例句: Wash your hands <span class="highlight">before</span> eating.</p>
+                    <p>(吃東西<span class="highlight">之前</span>要洗手。)</p>
+                </div>
+                
+                <div class="lucas-example">
+                    <p>我<strong>before</strong>睡覺要刷牙，<strong>before</strong>出去玩要穿外套。</p>
+                    <button class="example-btn" data-sentence="I brush my teeth before sleeping, and wear a jacket before going out to play." style="margin-top: 5px; padding: 8px 15px; font-size: 0.9rem;">
+                        <i class="fas fa-play-circle"></i> Lucas例句發音
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="lucas-story">
+            <h2 class="story-title">Lucas的一天故事</h2>
+            <div class="story-content">
+                <p>早上起床後，我<strong>before</strong>吃早餐先洗手。媽媽給了我<strong>some</strong>麥片和牛奶。</p>
+                <p>我說：「媽媽，我可以要<strong>more</strong>草莓嗎？」媽媽說：「<strong>Only</strong>剩下三顆草莓了。」</p>
+                <p>下午玩玩具時，我發現有<strong>too much</strong>玩具在地上！媽媽說：「<strong>Before</strong>吃點心，要把玩具收好。」</p>
+                <p>今天真是學習<strong>much</strong>新單字的一天！</p>
+            </div>
+            <div class="story-audio">
+                <button class="story-btn" id="story-audio-btn">
+                    <i class="fas fa-headphones"></i> 聽Lucas的故事
+                </button>
+            </div>
+        </div>
+        
+        <div class="practice-section">
+            <h2 class="practice-title">練習小遊戲</h2>
+            
+            <div class="practice-box">
+                <div class="sentence-card">
+                    <div class="animal-icon"><i class="fas fa-cat"></i></div>
+                    <p>跟著Lucas一起練習：</p>
+                    <p>"I want <strong>some</strong> juice."</p>
+                    <button class="example-btn" data-sentence="I want some juice." style="margin: 5px; padding: 8px 15px;">
+                        <i class="fas fa-play-circle"></i> 發音
+                    </button>
+                    <p>"I have <strong>only</strong> one toy car."</p>
+                    <button class="example-btn" data-sentence="I have only one toy car." style="margin: 5px; padding: 8px 15px;">
+                        <i class="fas fa-play-circle"></i> 發音
+                    </button>
+                    <p>"Eat your vegetables <strong>before</strong> dessert."</p>
+                    <button class="example-btn" data-sentence="Eat your vegetables before dessert." style="margin: 5px; padding: 8px 15px;">
+                        <i class="fas fa-play-circle"></i> 發音
+                    </button>
+                </div>
+                
+                <div class="fill-blank">
+                    <div class="animal-icon"><i class="fas fa-dog"></i></div>
+                    <p>幫Lucas填空：</p>
+                    <p>Can I have <span class="blank-word" id="blank1"></span> cookies?</p>
+                    <button class="example-btn" data-sentence="Can I have some cookies?" style="margin: 10px; padding: 8px 15px;">
+                        <i class="fas fa-volume-up"></i> 聽正確答案
+                    </button>
+                    <p>I have <span class="blank-word" id="blank2"></span> one balloon.</p>
+                    <button class="example-btn" data-sentence="I have only one balloon." style="margin: 10px; padding: 8px 15px;">
+                        <i class="fas fa-volume-up"></i> 聽正確答案
+                    </button>
+                    
+                    <div class="word-options">
+                        <button class="word-option" data-fill="1">some</button>
+                        <button class="word-option" data-fill="1">more</button>
+                        <button class="word-option" data-fill="2">only</button>
+                        <button class="word-option" data-fill="2">much</button>
+                        <button class="word-option" data-clear>清除</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>專為4歲小朋友設計的Sight Words學習網站 | Lucas和你一起學習: only, more, some, much, before</p>
+            <p>點擊單字和例句旁邊的按鈕可以聽到發音哦！</p>
+        </footer>
+    </div>
+
+    <script>
+        // 單字發音功能
+        const pronounceButtons = document.querySelectorAll('.pronounce-btn');
+        
+        // 建立語音合成
+        const speech = window.speechSynthesis;
+        
+        // 設定語音參數
+        function setupSpeech(utterance) {
+            utterance.rate = 0.8; // 較慢的語速適合兒童
+            utterance.pitch = 1.2; // 較高的音調
+            utterance.volume = 1;
+        }
+        
+        pronounceButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const word = this.getAttribute('data-word');
+                speakWord(word);
+                
+                // 添加按鈕動畫反饋
+                this.style.backgroundColor = '#06d6a0';
+                setTimeout(() => {
+                    this.style.backgroundColor = '#3a86ff';
+                }, 300);
+            });
+        });
+        
+        function speakWord(word) {
+            // 停止任何正在進行的語音
+            speech.cancel();
+            
+            // 創建語音實例
+            const utterance = new SpeechSynthesisUtterance(word);
+            setupSpeech(utterance);
+            
+            // 使用預設語音
+            speech.speak(utterance);
+        }
+        
+        // 例句發音功能
+        const exampleButtons = document.querySelectorAll('.example-btn');
+        
+        exampleButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const sentence = this.getAttribute('data-sentence');
+                speakSentence(sentence);
+                
+                // 添加按鈕動畫反饋
+                const originalColor = this.style.backgroundColor;
+                this.style.backgroundColor = '#ff6b9d';
+                setTimeout(() => {
+                    this.style.backgroundColor = originalColor || '#06d6a0';
+                }, 300);
+            });
+        });
+        
+        function speakSentence(sentence) {
+            // 停止任何正在進行的語音
+            speech.cancel();
+            
+            // 創建語音實例
+            const utterance = new SpeechSynthesisUtterance(sentence);
+            setupSpeech(utterance);
+            
+            // 使用預設語音
+            speech.speak(utterance);
+        }
+        
+        // Lucas故事發音功能
+        const storyBtn = document.getElementById('story-audio-btn');
+        
+        storyBtn.addEventListener('click', function() {
+            const storyParts = [
+                "早上起床後，我before吃早餐先洗手。媽媽給了我some麥片和牛奶。",
+                "我說：「媽媽，我可以要more草莓嗎？」媽媽說：「Only剩下三顆草莓了。」",
+                "下午玩玩具時，我發現有too much玩具在地上！媽媽說：「Before吃點心，要把玩具收好。」",
+                "今天真是學習much新單字的一天！"
+            ];
+            
+            // 停止任何正在進行的語音
+            speech.cancel();
+            
+            // 逐一朗讀故事各部分
+            let delay = 0;
+            storyParts.forEach((part, index) => {
+                setTimeout(() => {
+                    const utterance = new SpeechSynthesisUtterance(part);
+                    setupSpeech(utterance);
+                    
+                    // 如果是中文部分，設置中文語音
+                    if (window.speechSynthesis.getVoices().some(voice => voice.lang.startsWith('zh'))) {
+                        utterance.lang = 'zh-TW';
+                    }
+                    
+                    speech.speak(utterance);
+                }, delay);
+                
+                // 每部分之間延遲2.5秒
+                delay += 3500;
+            });
+            
+            // 添加按鈕動畫反饋
+            this.style.backgroundColor = '#ff6b9d';
+            setTimeout(() => {
+                this.style.backgroundColor = '#9d4edd';
+            }, 300);
+        });
+        
+        // 填空練習功能
+        const wordOptions = document.querySelectorAll('.word-option');
+        const blank1 = document.getElementById('blank1');
+        const blank2 = document.getElementById('blank2');
+        
+        wordOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const fillFor = this.getAttribute('data-fill');
+                const word = this.textContent;
+                
+                if (this.getAttribute('data-clear')) {
+                    // 清除填空
+                    blank1.innerHTML = '';
+                    blank2.innerHTML = '';
+                    blank1.style.backgroundColor = 'white';
+                    blank2.style.backgroundColor = 'white';
+                } else if (fillFor === '1') {
+                    // 填充第一個空白
+                    blank1.innerHTML = word;
+                    blank1.style.backgroundColor = '#ffd166';
+                    speakWord(word);
+                    
+                    // 檢查答案
+                    if (word === 'some') {
+                        setTimeout(() => {
+                            speakSentence("Good job! Can I have some cookies?");
+                        }, 800);
+                    }
+                } else if (fillFor === '2') {
+                    // 填充第二個空白
+                    blank2.innerHTML = word;
+                    blank2.style.backgroundColor = '#ffd166';
+                    speakWord(word);
+                    
+                    // 檢查答案
+                    if (word === 'only') {
+                        setTimeout(() => {
+                            speakSentence("Excellent! I have only one balloon.");
+                        }, 800);
+                    }
+                }
+            });
+        });
+        
+        // 添加單字卡片的點擊發音功能
+        const wordCards = document.querySelectorAll('.word-card');
+        wordCards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                // 確保不是點擊在按鈕上才觸發
+                if (!e.target.closest('.pronounce-btn') && !e.target.closest('.example-btn')) {
+                    const word = this.querySelector('.word').textContent;
+                    speakWord(word);
+                    
+                    // 添加視覺反饋
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                }
+            });
+        });
+        
+        // 頁面載入時播放歡迎訊息
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                const welcomeMsg = new SpeechSynthesisUtterance("歡迎來到寶寶學單字！我是Lucas，讓我們一起學習吧！");
+                setupSpeech(welcomeMsg);
+                
+                if (window.speechSynthesis.getVoices().some(voice => voice.lang.startsWith('zh'))) {
+                    welcomeMsg.lang = 'zh-TW';
+                }
+                
+                speech.speak(welcomeMsg);
+            }, 1000);
+        });
+        
+        // 確保語音API在頁面載入時可用
+        if ('speechSynthesis' in window) {
+            // 載入語音列表
+            speechSynthesis.getVoices();
+        } else {
+            alert("您的瀏覽器不支援語音功能，部分功能可能無法使用。");
+        }
+    </script>
+</body>
+</html>
